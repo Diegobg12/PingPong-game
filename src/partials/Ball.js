@@ -27,6 +27,14 @@ export default class Ball {
 
     }
 
+    wallCollision(){
+        const hitTop = (this.y - this.radio <=0);
+        const hitBottom = (this.y + this.radio >= this.boardHeight);
+        if (hitTop || hitBottom) {
+            this.vy = this.vy * -1;
+        }
+    }
+
     render(svg) {
       //Create Ball
     //   <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
@@ -37,5 +45,6 @@ export default class Ball {
           ball.setAttributeNS(null, "cy", this.y);
           svg.appendChild(ball);
         this.ballMove();
+        this.wallCollision();
     }
   }

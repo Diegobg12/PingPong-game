@@ -12,7 +12,7 @@ export default class Game {
           this.board = new Board(this.width, this.height);
           this.paddle1 = new Paddle(PADDLE_WIDTH, PADDLE_HEIGHT, this.height, PADDLE_GAP, (this.height / 2) - PADDLE_HEIGHT / 2, KEYS.p1Up, KEYS.p1dow);
           this.paddle2 = new Paddle(PADDLE_WIDTH, PADDLE_HEIGHT, this.height, this.width - PADDLE_GAP - PADDLE_WIDTH, (this.height / 2) - (PADDLE_HEIGHT / 2), KEYS.p2Up, KEYS.p2down);
-          this.ball = new Ball(BALL_RADIO, BOARD_WIDTH/2, BOARD_HEIGHT/2);
+          this.ball = new Ball(BALL_RADIO, BOARD_WIDTH, BOARD_HEIGHT);
   }
 
   render() {
