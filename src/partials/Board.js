@@ -7,24 +7,23 @@ export default class Board {
     }
     render(svg) {
       //Create Board
-      let board = document.createElementNS(SVG_NS, "rect");
-      board.setAttributeNS(null, "fill", BOARD_COLOR);
-      board.setAttributeNS(null, "width", this.width);
-      board.setAttributeNS(null, "height", this.height);
-      board.setAttributeNS(null, "x", 0);
-      board.setAttributeNS(null, "y", 0);
-      svg.appendChild(board);
+          let board = document.createElementNS(SVG_NS, "rect");
+          board.setAttributeNS(null, "fill", BOARD_COLOR);
+          board.setAttributeNS(null, "width", this.width);
+          board.setAttributeNS(null, "height", this.height);
+          board.setAttributeNS(null, "x", 0);
+          board.setAttributeNS(null, "y", 0);
+          svg.appendChild(board);
 
       //Create Net
-      let line = document.createElementNS(SVG_NS, "line");
-      line.setAttributeNS(null, "stroke-dasharray", "10, 10");
-      line.setAttributeNS(null, "x1", this.width/2);
-      line.setAttributeNS(null, "y1", 0);
-      line.setAttributeNS(null, "x2", this.width/2);
-      line.setAttributeNS(null, "y2", this.height);
-      line.setAttributeNS(null, "stroke", PADDLE_COLOR);
-      line.setAttributeNS(null, "stroke-width", 4);
-      svg.appendChild(line);
-    // <line stroke="#fff" stroke-dasharray="5,5" stroke-width="4" y2="256" x2="256" y1="0" x1="256"/>
+          let line = document.createElementNS(SVG_NS, "line");
+          line.setAttributeNS(null, "stroke-dasharray", "10, 10");
+          line.setAttributeNS(null, "x1", this.width/2);
+          line.setAttributeNS(null, "y1", 0);
+          line.setAttributeNS(null, "x2", this.width/2);
+          line.setAttributeNS(null, "y2", this.height);
+          line.setAttributeNS(null, "stroke", PADDLE_COLOR);
+          line.setAttributeNS(null, "stroke-width", 4);
+          svg.appendChild(line);
     }
   }
