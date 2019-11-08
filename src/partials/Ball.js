@@ -28,14 +28,45 @@ export default class Ball {
     }
 
     wallCollision(){
-        const hitTop = (this.y - this.radio <=0);
+        const hitTop = (this.y - this.radio <= 0);
         const hitBottom = (this.y + this.radio >= this.boardHeight);
+        const hitLeft = (this.x - this.radio < 0);
+        const hitRigth = (this.x + this.radio > this.boardWidth);
         if (hitTop || hitBottom) {
             this.vy = this.vy * -1;
         }
+        if (hitLeft) {
+            this.direction = 1;
+            this.reset();
+        }
+        if (hitRigth) {
+            this.direction = -1;
+            this.reset();
+        }
+
     }
 
-    render(svg) {
+    paddleCollition(p1, p2){
+        let hitWall = false, checkTop = false, checkBottom = false;
+        if (this.direction === 1) {
+            const p2wall = p2.getCoordinates();
+            hitWall = (this.x + this.radio >= p2wall.left);
+            checkTop = (this.y - this.radio >= p2wall.top);
+            checkBottom = (this.y + this.radio <= p2wall.bottom);
+        } else{
+            const p1wall = p1.getCoordinates();
+            hitWall = (this.x - this.radio <= p1wall.right);
+            checkTop = (this.y - this.radio >= p1wall.top);
+            checkBottom = (this.y + this.radio <= p1wall.bottom);
+        }
+        if(hitWall && checkTop && checkBottom){
+            this.vx = this.vx * -1;
+            this.direction = this.direction * -1;
+        }
+    }
+
+
+    render(svg, p1, p2) {
       //Create Ball
     //   <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
           let ball = document.createElementNS(SVG_NS, "circle");
@@ -46,5 +77,6 @@ export default class Ball {
           svg.appendChild(ball);
         this.ballMove();
         this.wallCollision();
+        this.paddleCollition(p1, p2);
     }
   }

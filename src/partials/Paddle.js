@@ -35,7 +35,17 @@ export default class Paddle {
       this.y= Math.min(this.y + this.speed, this.boardHeight-this.height);
    
     }
-  
+
+    getCoordinates(){
+      return{
+          left: this.x,
+          top: this.y,
+          right: this.x + this.width,
+          bottom: this.y + this.height,
+      }
+    }
+
+
     render(svg) {
       // Create the SVG
       let paddle = document.createElementNS(SVG_NS, "rect");
