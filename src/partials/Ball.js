@@ -1,4 +1,5 @@
 import { SVG_NS, BOARD_COLOR, PADDLE_COLOR } from '../settings';
+import PingSound from '../../public/sounds/pong-03.wav';
 
 export default class Ball {
     constructor(radio, boardWidth, boardHeight) {
@@ -8,6 +9,7 @@ export default class Ball {
         this.direction = 1;
         this.x = this.boardWidth/2;
         this.y = this.boardHeight/2;
+        this.ping = new Audio(PingSound);
         this.reset();
     }
 
@@ -62,6 +64,7 @@ export default class Ball {
             checkBottom = (this.y + this.radio <= p1wall.bottom);
         }
         if(hitWall && checkTop && checkBottom){
+            this.ping.play();
             this.vx = this.vx * -1;
             this.direction = this.direction * -1;
         }

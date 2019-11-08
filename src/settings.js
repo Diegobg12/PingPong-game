@@ -1,3 +1,5 @@
+import Score from "./partials/Score";
+
 // settings.js
 export const SVG_NS = "http://www.w3.org/2000/svg";
 
@@ -12,6 +14,8 @@ export const PADDLE_HEIGHT = 56;
 export const PADDLE_GAP = 10;
 export const PADDLE_SPEED = 10;
 export const  BALL_RADIO = 10;
+// Score------------------
+export const TEXT_SIZE = 30;
 
 export const KEYS = {
     p1Up: "w",

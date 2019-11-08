@@ -1,7 +1,8 @@
-import {SVG_NS,PADDLE_HEIGHT,PADDLE_WIDTH,PADDLE_GAP, KEYS, BALL_RADIO, BOARD_WIDTH, BOARD_HEIGHT, PADDLE_SPEED} from '../settings';
+import {SVG_NS,PADDLE_HEIGHT,PADDLE_WIDTH,PADDLE_GAP, KEYS, BALL_RADIO, BOARD_WIDTH, BOARD_HEIGHT, PADDLE_SPEED, TEXT_SIZE} from '../settings';
 import Board from './Board';
 import Paddle from './Paddle';
 import Ball from './Ball'
+import Score from './Score';
 
 export default class Game {
   constructor(element, width, height) {
@@ -14,6 +15,8 @@ export default class Game {
           this.paddle2 = new Paddle(PADDLE_WIDTH, PADDLE_HEIGHT, this.height, this.width - PADDLE_GAP - PADDLE_WIDTH, (this.height / 2) - (PADDLE_HEIGHT / 2), KEYS.p2Up, KEYS.p2down);
           this.ball = new Ball(BALL_RADIO, BOARD_WIDTH, BOARD_HEIGHT);
           this.paused = false;
+          this.score1 = new Score(this.width/2 - 50, 30,TEXT_SIZE);
+          this.score2 = new Score(this.width/2 + 25, 30,TEXT_SIZE);
           document.addEventListener("keydown", (event)=>{
                   if(event.key === KEYS.pause){
                           this.paddle1.setSpeed(PADDLE_SPEED);
@@ -42,6 +45,8 @@ export default class Game {
           this.paddle1.render(svg);
           this.paddle2.render(svg);
           this.ball.render(svg, this.paddle1, this.paddle2);
+          this.score1.render(svg, this.paddle1.getScore());
+          this.score2.render(svg, this.paddle2.getScore());
           // More code goes here....
 
   }
