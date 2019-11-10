@@ -12,10 +12,12 @@ export const PADDLE_COLOR = "#FFFFFF";
 export const PADDLE_WIDTH = 8;
 export const PADDLE_HEIGHT = 56;
 export const PADDLE_GAP = 10;
-export const PADDLE_SPEED = 10;
+export const PADDLE_SPEED = 15;
 export const  BALL_RADIO = 10;
 // Score------------------
 export const TEXT_SIZE = 30;
+export const WINNER = 5;
+export const SECOND_BALL = 10;
 
 export const KEYS = {
     p1Up: "w",

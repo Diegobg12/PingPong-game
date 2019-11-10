@@ -1,4 +1,4 @@
-import { SVG_NS, PADDLE_COLOR, PADDLE_SPEED} from '../settings';
+import { SVG_NS, PADDLE_COLOR, PADDLE_SPEED, WINNER} from '../settings';
 
 export default class Paddle {
     constructor(width, height, boardHeight, x, y, upKey, downKey) {
@@ -9,6 +9,7 @@ export default class Paddle {
       this.y = y;
       this.score = 0;
       this.speed = PADDLE_SPEED;
+      this.win = false;
       
       document.addEventListener("keydown", (event) => {
         switch (event.key) {
@@ -38,7 +39,12 @@ export default class Paddle {
 
 
     increaseScore(){
-      this.score += 1;
+      if (this.score === WINNER) {
+        this.win = true;
+      }else{
+        this.score += 1;
+      }
+
     }
 
     getScore(){
@@ -58,6 +64,10 @@ export default class Paddle {
       }
     }
 
+    resetScore(){
+      this.score = 0;
+    }
+
 
     render(svg) {
       // Create the SVG
@@ -70,7 +80,5 @@ export default class Paddle {
      
       svg.appendChild(paddle);
     }
-    if (condition) {
-      
-    }
+
   }
