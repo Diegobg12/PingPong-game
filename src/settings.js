@@ -17,7 +17,7 @@ export const  BALL_RADIO = 10;
 // Score------------------
 export const TEXT_SIZE = 30;
 export const WINNER = 5;
-export const SECOND_BALL = 10;
+export const SECOND_BALL = 3;
 
 export const KEYS = {
     p1Up: "w",

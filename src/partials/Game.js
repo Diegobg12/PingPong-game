@@ -55,9 +55,11 @@ export default class Game {
           const p1_ball = this.paddle1.getScore() === SECOND_BALL;
           const p2_ball = this.paddle2.getScore() === SECOND_BALL;
           if(p2_ball || p1_ball){
-                this.ball2.render(svg, this.paddle1, this.paddle2);
-          }
 
+                this.ball2.render(svg, this.paddle1, this.paddle2);
+   
+          }
+          
         //   this.ball2.render(svg, this.paddle1, this.paddle2);
           this.score1.render(svg, "PLAYER 1 - " + this.paddle1.getScore());
           this.score2.render(svg, this.paddle2.getScore() + " - PLAYER 2");
