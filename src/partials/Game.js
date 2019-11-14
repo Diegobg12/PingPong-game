@@ -108,6 +108,10 @@ export default class Game {
                 this.win.textContent = "P1 WON";
                 this.paddle1.resetScore();
                 this.paddle2.resetScore();
+                this.paddle1.x = PADDLE_GAP;
+                this.paddle1.y = (this.height / 2) - PADDLE_HEIGHT / 2;
+                this.paddle2.x = this.width - PADDLE_GAP - PADDLE_WIDTH;
+                this.paddle2.y = (this.height / 2) - (PADDLE_HEIGHT / 2);
                 
                 
                 }else{
