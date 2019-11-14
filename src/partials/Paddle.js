@@ -1,4 +1,4 @@
-import { SVG_NS, PADDLE_COLOR, PADDLE_SPEED, WINNER} from '../settings';
+import { SVG_NS, PADDLE_COLOR, PADDLE_SPEED, WINNER, PADDLE_HEIGHT} from '../settings';
 
 export default class Paddle {
     constructor(width, height, boardHeight, x, y, upKey, downKey) {
@@ -37,12 +37,13 @@ export default class Paddle {
    
     }
 
-
+// IF THE PADDLE SCORE THE HIGH REDUCE TO GIVE
     increaseScore(){
       if (this.score === WINNER) {
         this.win = true;
       }else{
         this.score += 1;
+        this.height -=5;
       }
 
     }
@@ -66,6 +67,7 @@ export default class Paddle {
 
     resetScore(){
       this.score = 0;
+      this.height = PADDLE_HEIGHT;
     }
 
 

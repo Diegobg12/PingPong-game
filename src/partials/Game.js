@@ -10,6 +10,7 @@ export default class Game {
           this.width = width;
           this.height = height;
           this.gameElement = document.getElementById(this.element);
+          this.svg = "";
           this.board = new Board(this.width, this.height);
           this.paddle1 = new Paddle(PADDLE_WIDTH, PADDLE_HEIGHT, this.height, PADDLE_GAP, (this.height / 2) - PADDLE_HEIGHT / 2, KEYS.p1Up, KEYS.p1dow);
           this.paddle2 = new Paddle(PADDLE_WIDTH, PADDLE_HEIGHT, this.height, this.width - PADDLE_GAP - PADDLE_WIDTH, (this.height / 2) - (PADDLE_HEIGHT / 2), KEYS.p2Up, KEYS.p2down);
@@ -18,16 +19,46 @@ export default class Game {
           this.paused = false;
           this.score1 = new Score(10 , 30,TEXT_SIZE);
           this.score2 = new Score(this.width/2 + 25, 30,TEXT_SIZE);
-
+          
           document.addEventListener("keydown", (event)=>{
                   if(event.key === KEYS.pause){
                           this.paddle1.setSpeed(PADDLE_SPEED);
                           this.paddle2.setSpeed(PADDLE_SPEED);
                           this.pause = !this.pause; 
+                          const pause = document.createElementNS(SVG_NS, "text");
+                          pause.setAttributeNS(null, "x", BOARD_WIDTH/2 - 80 );
+                          pause.setAttributeNS(null, "y", BOARD_HEIGHT/2);
+                          pause.textContent = "PAUSE";
+                          pause.setAttributeNS(null, "font-size", 50);
+                          pause.setAttributeNS(null, "fill", PADDLE_COLOR);
+                          pause.setAttributeNS(null, "font-family", "'Silkscreen Web', monotype");
+                          this.svg.appendChild(pause);
                   }
+
+                  if(event.key === KEYS.gameOver || event.key === KEYS.gameOvers){
+                        const go = document.createElementNS(SVG_NS, "text");
+                        go.setAttributeNS(null, "x", BOARD_WIDTH/2 - 150 );
+                        go.setAttributeNS(null, "y", BOARD_HEIGHT/2);
+                        go.textContent = "GAME OVER";
+                        go.setAttributeNS(null, "font-size", 50);
+                        go.setAttributeNS(null, "fill", PADDLE_COLOR);
+                        go.setAttributeNS(null, "font-family", "'Silkscreen Web', monotype");
+                        this.win.textContent = "";
+                        this.paddle1.x = PADDLE_GAP;
+                        this.paddle1.y = (this.height / 2) - PADDLE_HEIGHT / 2;
+                        this.paddle2.x = this.width - PADDLE_GAP - PADDLE_WIDTH;
+                        this.paddle2.y = (this.height / 2) - (PADDLE_HEIGHT / 2);
+                        this.paddle1.resetScore();
+                        this.paddle2.resetScore();
+
+                        // this.svg.remove(win);
+                        // ss
+                        this.svg.appendChild(go);
+                }
           })
           
   }
+
 
   render() {
           if (this.pause){
@@ -38,17 +69,17 @@ export default class Game {
           // Reset the SVG
           this.gameElement.innerHTML = '';
           // Create the SVG
-          let svg = document.createElementNS(SVG_NS, "svg");
-          svg.setAttributeNS(null, "width", this.width);
-          svg.setAttributeNS(null, "height", this.height);
-          svg.setAttributeNS(null, "viewBox", `0 0 ${this.width} ${this.height}`);
+          this.svg = document.createElementNS(SVG_NS, "svg");
+          this.svg.setAttributeNS(null, "width", this.width);
+          this.svg.setAttributeNS(null, "height", this.height);
+          this.svg.setAttributeNS(null, "viewBox", `0 0 ${this.width} ${this.height}`);
 
-          this.gameElement.appendChild(svg);
+          this.gameElement.appendChild(this.svg);
           // Render elements
-          this.board.render(svg);
-          this.paddle1.render(svg);
-          this.paddle2.render(svg);
-          this.ball.render(svg, this.paddle1, this.paddle2);
+          this.board.render(this.svg);
+          this.paddle1.render(this.svg);
+          this.paddle2.render(this.svg);
+          this.ball.render(this.svg, this.paddle1, this.paddle2);
 
         //  Render the second ball after SECOND_BALL VALUE
 
@@ -56,57 +87,53 @@ export default class Game {
           const p2_ball = this.paddle2.getScore() === SECOND_BALL;
           if(p2_ball || p1_ball){
 
-                this.ball2.render(svg, this.paddle1, this.paddle2);
+                this.ball2.render(this.svg, this.paddle1, this.paddle2);
    
           }
           
-        //   this.ball2.render(svg, this.paddle1, this.paddle2);
-          this.score1.render(svg, "PLAYER 1 - " + this.paddle1.getScore());
-          this.score2.render(svg, this.paddle2.getScore() + " - PLAYER 2");
-
-
-          
+        //   this.ball2.render(this.svg, this.paddle1, this.paddle2);
+          this.score1.render(this.svg, "PLAYER 1 - " + this.paddle1.getScore());
+          this.score2.render(this.svg, this.paddle2.getScore() + " - PLAYER 2");          
           const p1w = this.paddle1.getScore() === WINNER;
           const p2w = this.paddle2.getScore() === WINNER;
           
           if (p1w || p2w) {
-                const win = document.createElementNS(SVG_NS, "text");
-                win.setAttributeNS(null, "x", BOARD_WIDTH/2 -150 );
-                win.setAttributeNS(null, "y", BOARD_HEIGHT/2);
+                this.win = document.createElementNS(SVG_NS, "text");
+                this.win.setAttributeNS(null, "x", BOARD_WIDTH/2-180);
+                this.win.setAttributeNS(null, "y", BOARD_HEIGHT/2);
+                this.win.setAttributeNS(null, "font-size", 90);
+                this.win.setAttributeNS(null, "fill", PADDLE_COLOR);
+                this.win.setAttributeNS(null, "font-family", "'Silkscreen Web', monotype");
                 if (p1w) {
-                win.textContent = "P1 WON star";  
+                this.win.textContent = "P1 WON";
                 this.paddle1.resetScore();
                 this.paddle2.resetScore();
-                this.pause = !this.pause; 
+                
                 
                 }else{
-                win.textContent = "P2 WON";  
+                this.win.textContent = "P2 WON";  
                 this.paddle1.resetScore();
                 this.paddle2.resetScore();    
-                this.pause = !this.pause;  
-                }
                 
-                win.setAttributeNS(null, "font-size", 40);
-                win.setAttributeNS(null, "fill", PADDLE_COLOR);
-                win.setAttributeNS(null, "font-family", "'Silkscreen Web', monotype");
-                svg.appendChild(win);
+                }
+                this.pause = !this.pause;  
+                const ask = document.createElementNS(SVG_NS, "text");
+                ask.setAttributeNS(null, "x", BOARD_WIDTH/2 -150 );
+                ask.setAttributeNS(null, "y", 200);
+                ask.setAttributeNS(null, "font-size", 20);
+                ask.setAttributeNS(null, "fill", PADDLE_COLOR);
+                ask.setAttributeNS(null, "font-family", "'Silkscreen Web', monotype");
+                ask.textContent = "ENTER TO STAR - N TO FINISH"; 
+                this.svg.appendChild(this.win);
+                this.svg.appendChild(ask);
+
                   
           }
+                
 
           // More code goes here....
 
-          document.addEventListener("keydown", (event)=>{
-                if(event.key === KEYS.pause){
-                        const pause = document.createElementNS(SVG_NS, "text");
-                        pause.setAttributeNS(null, "x", BOARD_WIDTH/2 - 80 );
-                        pause.setAttributeNS(null, "y", BOARD_HEIGHT/2);
-                        pause.textContent = "PAUSE";
-                        pause.setAttributeNS(null, "font-size", 50);
-                        pause.setAttributeNS(null, "fill", PADDLE_COLOR);
-                        pause.setAttributeNS(null, "font-family", "'Silkscreen Web', monotype");
-                        svg.appendChild(pause);
-                }
-        })
+                
         //   pause-----------
 
 
