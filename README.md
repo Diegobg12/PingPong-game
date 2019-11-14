@@ -39,3 +39,11 @@ Once you have done this, you can run:
 `$ npm run deploy`
 
 Now check out your deployed site 🙂
+
+## Stretch Goals
+
+1. Declare a winner when one of them score 5 points
+
+2. When someone score 3 points a second ball will show.
+
+3. When someone score the paddle became shorter.
